@@ -43,6 +43,16 @@ class User implements UserInterface
      */
     private $Pseudo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="id_user")
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +163,37 @@ class User implements UserInterface
     public function setPseudo(?string $Pseudo): self
     {
         $this->Pseudo = $Pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+            // set the owning side to null (unless already changed)
+            if ($article->getIdUser() === $this) {
+                $article->setIdUser(null);
+            }
+        }
 
         return $this;
     }
