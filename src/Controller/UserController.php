@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\CommentType;
 
 class UserController extends AbstractController
 {
@@ -33,7 +33,7 @@ class UserController extends AbstractController
     {
         // creates a task and gives it some dummy data for this example
         $User = new User();
-        $UserForm= $this->createForm(CommentType::class, $User);
+        $UserForm= $this->createForm(UserType::class, $User);
 
         $UserForm->handleRequest($request);
         if (
