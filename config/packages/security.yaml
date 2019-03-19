@@ -15,10 +15,12 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: ~
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthentificatorAuthenticator
+            http_basic:
+                realm: Secured Area
 
             # activate different ways to authenticate
 

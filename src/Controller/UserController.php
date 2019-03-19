@@ -7,6 +7,7 @@ use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -28,10 +29,8 @@ class UserController extends AbstractController
     /**
      * @Route("/create", name="create_profil")
      */
-
-    public function new(Request $request)
+    public function new(UserPasswordEncoderInterface $encoder,Request $request)
     {
-        // creates a task and gives it some dummy data for this example
         $User = new User();
         $UserForm= $this->createForm(UserType::class, $User);
 
@@ -41,12 +40,17 @@ class UserController extends AbstractController
         ){
 
             $em = $this->getDoctrine()->getManager();
+
+
+            $password = $User->getPassword();
+            var_dump($password);
+            $encoded = $encoder->encodePassword($User, $password);
+
+            var_dump($encoded);
+            $User->setPassword($encoded);
+
             $em->persist($User);
             $em->flush();
-
-            $this->addFlash("success", "Merci pour votre commentaire");
-
-            //plus tard, rediriger vers la page de détails de la question
             return $this->redirectToRoute("app_login");
         }
 
