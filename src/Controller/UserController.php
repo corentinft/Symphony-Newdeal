@@ -43,11 +43,10 @@ class UserController extends AbstractController
 
 
             $password = $User->getPassword();
-            var_dump($password);
             $encoded = $encoder->encodePassword($User, $password);
 
-            var_dump($encoded);
             $User->setPassword($encoded);
+            $User->setRoles(['ROLE_USER']);
 
             $em->persist($User);
             $em->flush();

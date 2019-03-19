@@ -3,6 +3,7 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
+    <a class="text-muted" href="{{ path('logout') }}">logout </a>
     {% for User in Users %}
         <article>
             <h2> {{User.nom}} </h2>

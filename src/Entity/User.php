@@ -5,10 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Cet email existe déjà .")
  */
 class User implements UserInterface
 {
@@ -39,6 +40,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $prenom;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $roles;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

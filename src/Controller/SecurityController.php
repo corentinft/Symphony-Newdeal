@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use http\Exception\RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,4 +22,13 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout()
+    {
+        throw new RuntimeException('This should never be called directly.');
+    }
+
 }
