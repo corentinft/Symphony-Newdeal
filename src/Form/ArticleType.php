@@ -14,9 +14,6 @@ class ArticleType extends AbstractType
         $builder
             ->add('title')
             ->add('texte')
-            ->add('date_cre')
-            ->add('date_Maj')
-            ->add('id_user')
         ;
     }
 

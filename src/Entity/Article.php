@@ -37,10 +37,10 @@ class Article
     private $date_Maj;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\user", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_user;
+    private $user;
 
     public function getId(): ?int
     {
@@ -91,17 +91,20 @@ class Article
     public function setDateMaj(\DateTimeInterface $date_Maj): self
     {
         $this->date_Maj = $date_Maj;
-    }
-
-    public function getIdUser(): ?user
-    {
-        return $this->id_user;
-    }
-
-    public function setIdUser(?user $id_user): self
-    {
-        $this->id_user = $id_user;
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 }

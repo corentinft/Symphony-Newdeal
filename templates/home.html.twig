@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}home{% endblock %}
+
+{% block body %}
+    <button><a class="text-muted" href="{{ path('app_login') }}">connection</a></button>
+    <button><a class="text-muted" href="{{ path('create_profil') }}">s'inscrire</a></button>
+{% endblock %}

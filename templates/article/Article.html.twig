@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article {{Article.Title}} {% endblock %}
+
+{% block body %}
+    <h1>{{ Article.Title }}</h1>
+    <p>{{ Article.Texte }}</p>
+    <div>{{ Article.User.Prenom }}{{ Article.User.Nom }}</div>
+    <div> <div>{{ Article.DateMaj|date("d-m-Y")}}</div></div>
+    <button><a class="text-muted" href="{{ path('article') }}">retour</a></button>
+{% endblock %}

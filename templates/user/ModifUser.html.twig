@@ -5,7 +5,7 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button>Envoyer</button>
+    <button>Save</button>
     {{ form_end(form) }}
-    <button><a class="text-muted" href="{{ path('index') }}">annuler</a></button>
+    <button><a class="text-muted" href="{{ path('user') }}">Retour</a></button>
 {% endblock %}

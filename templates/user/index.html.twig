@@ -3,11 +3,26 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-    <a class="text-muted" href="{{ path('logout') }}">logout </a>
+    <button><a class="text-muted" href="{{ path('logout') }}">logout </a></button>
+    <h1>Liste des comptes</h1>
     {% for User in Users %}
         <article>
-            <h2> {{User.nom}} </h2>
-            <div></div>
+            <table>
+                <tr>
+                    <td>{{User.Id}}</td>
+                    <td>{{User.Nom}}</td>
+                    <td>{{User.Prenom}}</td>
+                    <td>{{User.Pseudo}}</td>
+                    <td><button><a class="text-muted" href="{{ path("modif_user", {id: User.Id}) }}">éditer</a></button></td>
+                    <form action="{{ path('sup_user', {id: User.Id}) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.Id) }}">
+                        <button>Supprimer</button>
+                    </form>
+                </tr>
+            </table>
         </article>
     {% endfor %}
+    <div></div>
+    <button><a class="text-muted" href="{{ path('article') }}">liste des articles</a></button>
 {% endblock %}

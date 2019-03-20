@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil Creator{% endblock %}
+
+{% block body %}
+    {{ form_start(Articleform) }}
+    {{ form_widget(Articleform) }}
+    <button>Envoyer</button>
+    {{ form_end(Articleform) }}
+    <button><a class="text-muted" href="{{ path('article') }}">annuler</a></button>
+{% endblock %}

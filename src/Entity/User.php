@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -52,7 +53,7 @@ class User implements UserInterface
     private $Pseudo;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="id_user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user")
      */
     private $articles;
 

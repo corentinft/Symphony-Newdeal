@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cree un post{% endblock %}
+
+{% block body %}
+    <button><a class="text-muted" href="{{ path('logout') }}">logout </a></button>
+    {% for Article in Articles %}
+        <article>
+            <a href="{{ path('article_view', {id: Article.Id}) }}"><h1> {{ Article.title }} </h1></a>
+            <div>{{ Article.User.Prenom }} {{ Article.User.Nom }}</div>
+            <div>{{ Article.DateMaj|date("d-m-Y")}}</div>
+            <button><a class="text-muted" href="{{ path('modif_article', {id: Article.Id}) }}">éditer</a></button>
+            <form action="{{ path('sup_article', {id: Article.Id}) }}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ Article.Id) }}">
+                <button>Supprimer</button>
+            </form>
+        </article>
+    {% endfor %}
+    <button><a class="text-muted" href="{{ path('create_article') }}">créer un article</a></button>
+{% endblock %}
