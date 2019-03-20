@@ -38,22 +38,23 @@ class User implements UserInterface
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array")
      */
     private $roles;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $Pseudo;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $articles;
 

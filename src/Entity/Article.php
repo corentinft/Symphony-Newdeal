@@ -37,8 +37,9 @@ class Article
     private $date_Maj;
 
     /**
+     * @ORM\Column(nullable=true)
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 
