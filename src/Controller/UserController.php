@@ -21,6 +21,40 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/user/follow/{id}", name="followUser")
+     * @param User $User
+     */
+    public function follow(User $User)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $follow = $User->getFollowers();
+        $follow ++;
+
+        $id = $User->getId();
+
+        $User->setFollowers($follow);
+        $em->flush();
+
+        return $this->redirectToRoute("user_view", ["id" => $id]);
+    }
+
+    /**
+     * @Route("/user/{id}", name="user_view", requirements={"id" : "[0-9]+"})
+     */
+    public function userview($id)
+    {
+        $UserRepository = $this->getDoctrine()
+            ->getRepository(User::class);
+
+        $User = $UserRepository -> find($id);
+
+        return $this->render("user/User.html.twig", [
+            "User" => $User
+        ]);
+    }
+
+    /**
      * @Route("/user", name="user")
      */
     public function user()

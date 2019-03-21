@@ -8,18 +8,19 @@
     {% for User in Users %}
         <article>
             <table>
-                <tr>
-                    <td>{{User.Id}}</td>
-                    <td>{{User.Nom}}</td>
-                    <td>{{User.Prenom}}</td>
-                    <td>{{User.Pseudo}}</td>
-                    <td><button><a class="text-muted" href="{{ path("modif_user", {id: User.Id}) }}">éditer</a></button></td>
-                    <form action="{{ path('sup_user', {id: User.Id}) }}" method="post">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.Id) }}">
-                        <button>Supprimer</button>
-                    </form>
-                </tr>
+                    <tr>
+                        <td>{{User.Id}}</td>
+                        <td><a href="{{ path('user_view', {id: User.Id}) }}">{{User.Nom}}</a></td>
+                        <td><a href="{{ path('user_view', {id: User.Id}) }}">{{User.Prenom}}</a></td>
+                        <td>{{User.Pseudo}}</td>
+                        <td><button><a class="text-muted" href="{{ path("modif_user", {id: User.Id}) }}">éditer</a></button></td>
+                        <form action="{{ path('sup_user', {id: User.Id}) }}" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ User.Id) }}">
+                            <button>Supprimer</button>
+                        </form>
+                    </tr>
+
             </table>
         </article>
     {% endfor %}

@@ -57,9 +57,15 @@ class User implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $followers;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->follows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +209,18 @@ class User implements UserInterface
                 $article->setIdUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFollowers(): ?int
+    {
+        return $this->followers;
+    }
+
+    public function setFollowers(int $followers): self
+    {
+        $this->followers = $followers;
 
         return $this;
     }
