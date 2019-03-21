@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{User.Pseudo}} {% endblock %}
+
+{% block body %}
+    <div>{{ User.Prenom }} {{ User.Nom }}</div>
+    <button><a class="text-muted" href="{{ path('user') }}">retour</a></button>
+{% endblock %}

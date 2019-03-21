@@ -49,7 +49,34 @@ class UserController extends AbstractController
 
         $User = $UserRepository -> find($id);
 
+        $id2 = $this->getUser()->getId();
+
+        if ($id == $id2){
+            return $this->redirectToRoute("user_view_none", ["id" => $id]);
+        }
+
         return $this->render("user/User.html.twig", [
+            "User" => $User
+        ]);
+    }
+
+    /**
+     * @Route("/Personal_user/{id}", name="user_view_none", requirements={"id" : "[0-9]+"})
+     */
+    public function userviewnone($id)
+    {
+        $UserRepository = $this->getDoctrine()
+            ->getRepository(User::class);
+
+        $User = $UserRepository -> find($id);
+
+        $id2 = $this->getUser()->getId();
+
+        if ($id != $id2){
+            return $this->redirectToRoute("user_view", ["id" => $id]);
+        }
+
+        return $this->render("user/Personal _User.html.twig", [
             "User" => $User
         ]);
     }
@@ -89,6 +116,7 @@ class UserController extends AbstractController
             $encoded = $encoder->encodePassword($User, $password);
 
             $User->setPassword($encoded);
+            $User->setFollowers(0);
             $User->setRoles(['ROLE_USER']);
 
             $em->persist($User);
@@ -117,7 +145,6 @@ class UserController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-
             $password = $User->getPassword();
             $encoded = $encoder->encodePassword($User, $password);
 
@@ -125,7 +152,7 @@ class UserController extends AbstractController
 
             $em->persist($User);
             $em->flush();
-            return $this->redirectToRoute("app_login");
+            return $this->redirectToRoute("user");
         }
 
         return $this->render("User/ModifUser.html.twig", [
@@ -147,6 +174,47 @@ class UserController extends AbstractController
             $em->flush();
         };
         return $this->redirectToRoute("user");
+    }
+
+    /**
+     * @Route("/user/setfollow/{id}", name="setfollow_user")
+     * @param User $User
+     */
+    public function setfollow($id, User $User)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $User2 = $this->getUser();
+
+        $qb = $em->createQueryBuilder();
+        $id2 = $this->getUser()->getId();
+        $id = (int) $id;
+        var_dump($id2);
+
+        $qb->select('u.id')
+            ->from(User::class , 'u')
+            ->innerJoin('u.Follow', 'f')
+            ->innerJoin('u.users', 'i')
+            //->where('f.id = :id2')
+            //->setParameter('id2', $id2)
+            //->setParameter('id', $id)
+        ;
+
+        $rep = $qb->getQuery()->getResult();
+
+        var_dump($rep);
+
+        if(!empty($rep)){
+            $User->addUser($User2);
+            $follow = $User->getFollowers();
+            $follow ++;
+            $User->setFollowers($follow);
+            $em->flush();
+            return $this->redirectToRoute("user_view", ["id" => $id]);
+        }else{
+            $User->removeUser($User2);
+            $em->flush();
+            return $this->redirectToRoute("user_view", ["id" => $id]);
+        }
     }
 
 }

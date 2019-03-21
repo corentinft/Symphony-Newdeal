@@ -5,5 +5,6 @@
 {% block body %}
     <div>{{ User.Prenom }} {{ User.Nom }}</div>
     <button><a class="text-muted" href="{{ path('followUser',{id: User.Id}) }}">suivre la page {{ User.followers }} follow</a></button>
+    <button><a class="text-muted" href="{{ path('setfollow_user',{id: User.Id}) }}">suivre le compte</a></button>
     <button><a class="text-muted" href="{{ path('user') }}">retour</a></button>
 {% endblock %}

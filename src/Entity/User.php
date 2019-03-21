@@ -62,10 +62,22 @@ class User implements UserInterface
      */
     private $followers;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="users")
+     */
+    private $Follow;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="Follow")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->follows = new ArrayCollection();
+        $this->Follow = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,6 +233,60 @@ class User implements UserInterface
     public function setFollowers(int $followers): self
     {
         $this->followers = $followers;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getFollow(): Collection
+    {
+        return $this->Follow;
+    }
+
+    public function addFollow(self $follow): self
+    {
+        if (!$this->Follow->contains($follow)) {
+            $this->Follow[] = $follow;
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(self $follow): self
+    {
+        if ($this->Follow->contains($follow)) {
+            $this->Follow->removeElement($follow);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(self $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFollow($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(self $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeFollow($this);
+        }
 
         return $this;
     }
