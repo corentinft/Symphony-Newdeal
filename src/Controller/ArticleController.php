@@ -61,6 +61,7 @@ class ArticleController extends AbstractController
 
             $Article->setDateCre(new \DateTime());
             $Article->setDateMaj(new \DateTime());
+            $Article->setFollow(0);
 
             $user = $this->getUser();
 
@@ -120,4 +121,22 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute("article");
     }
 
+    /**
+     * @Route("/article/follow/{id}", name="follow")
+     * @param Article $Article
+     */
+    public function follow(Article $Article)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $follow = $Article->getFollow();
+        $follow ++;
+
+        $id = $Article->getId();
+
+        $Article->setFollow($follow);
+        $em->flush();
+
+        return $this->redirectToRoute("article_view", ["id" => $id]);
+    }
 }

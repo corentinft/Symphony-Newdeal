@@ -6,6 +6,7 @@
     <h1>{{ Article.Title }}</h1>
     <p>{{ Article.Texte }}</p>
     <div>{{ Article.User.Prenom }}{{ Article.User.Nom }}</div>
-    <div> <div>{{ Article.DateMaj|date("d-m-Y")}}</div></div>
+    <div>{{ Article.DateMaj|date("d-m-Y")}}</div>
+    <button><a class="text-muted" href="{{ path('follow',{id: Article.Id}) }}">suivre la page {{ Article.follow }} follow</a></button>
     <button><a class="text-muted" href="{{ path('article') }}">retour</a></button>
 {% endblock %}

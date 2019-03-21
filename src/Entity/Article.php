@@ -37,11 +37,15 @@ class Article
     private $date_Maj;
 
     /**
-     * @ORM\Column(nullable=true)
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $follow;
 
     public function getId(): ?int
     {
@@ -104,6 +108,18 @@ class Article
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getFollow(): ?int
+    {
+        return $this->follow;
+    }
+
+    public function setFollow(int $follow): self
+    {
+        $this->follow = $follow;
 
         return $this;
     }
